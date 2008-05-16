@@ -7,6 +7,7 @@ Merb.load_dependencies :environment => "test"
 Spec::Runner.configure do |config|
   # config.include(Merb::Test::ViewHelper)
   # config.include(Merb::Test::RouteHelper)
+  # config.include Merb::Test::SessionHelper
   config.include Merb::Test::RequestHelper
   config.include Merb::Test::ControllerHelper
 end

@@ -1,4 +1,30 @@
 merb_abel
 =========
 
-A plugin for the Merb framework that provides ...
+A plugin for the Merb framework that provides locales, languages, countries. (multi threaded)
+
+In your controller add:
+
+    before :set_locale
+    
+
+and access the user locale using  @controller.locale
+
+If a locale is set, you can also access @controller.language and @controller.country
+
+The locale is stored in request.env[:locale]
+
+At the moment you have 3 ways of setting up a locale:
+
+* default way in the config settings, overwite:
+
+    Merb::Plugins.config[:merb_abel] = {
+      :default_locale => 'en-US',
+      :default_language => 'en',
+      :default_country => 'US'
+    }
+    
+* per request basis, by sending a param called locale
+* store the locale in the session
+
+Abel doesn't support http header lookup yet.

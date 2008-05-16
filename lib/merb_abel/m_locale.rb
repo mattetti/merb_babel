@@ -4,17 +4,25 @@ module MLocale
     
     # A locale is made of a language + country code, such as en-UK or en-US 
     def locale 
-      params[:locale] || (session ? session[:locale] : nil) || Merb::Plugins.config[:merb_abel][:default_locale]
+      request.env[:locale] || params[:locale] || (session ? session[:locale] : nil) || Merb::Plugins.config[:merb_abel][:default_locale]
     end
     
     # many people don't care about locales, they might just want to use languages instead
     def language
-      params[:language] || language_from_locale ||(session ? session[:language] : nil) || Merb::Plugins.config[:merb_abel][:default_language]
+      request.env[:language] || params[:language] || language_from_locale || (session ? session[:language] : nil) || Merb::Plugins.config[:merb_abel][:default_language]
+    end
+    
+    def country
+      request.env[:country] || params[:country] || country_from_locale || (session ? session[:country] : nil) || Merb::Plugins.config[:merb_abel][:default_country]
     end
     
     # extract the language from the locale
     def language_from_locale
       request.env[:locale] ? request.env[:locale][0..1].downcase : nil
+    end
+    
+    def country_from_locale
+      request.env[:locale] ? request.env[:locale][3..5].upcase : nil
     end
     
     protected
