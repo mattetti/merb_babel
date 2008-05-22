@@ -2,12 +2,16 @@
 # You don't have to use a locale, in some cases you might just want to use the language
 module MLocale
     
+    def self.extended(obj)
+        p "#{obj} got extended"
+    end
+      
     # A locale is made of a language + country code, such as en-UK or en-US 
     def locale 
       request.env[:locale] || params[:locale] || (session ? session[:locale] : nil) || default_locale
     end
     
-    # many people don't care about locales, they might just want to use languages instead
+    # Many people don't care about locales, they might just want to use languages instead
     def language
       request.env[:language] || params[:language] || language_from_locale || (session ? session[:language] : nil) || default_language
     end
@@ -37,15 +41,15 @@ module MLocale
     # the Merb::Plugins.config[:merb_abel] hash in your settings
     #
       def default_locale
-        Merb::Plugins.config[:merb_abel] ? Merb::Plugins.config[:merb_abel][:default_locale] : nil
+        Merb::Plugins.config[:merb_babel] ? Merb::Plugins.config[:merb_babel][:default_locale] : nil
       end
 
       def default_language
-        Merb::Plugins.config[:merb_abel] ? Merb::Plugins.config[:merb_abel][:default_language] : nil
+        Merb::Plugins.config[:merb_babel] ? Merb::Plugins.config[:merb_babel][:default_language] : nil
       end
     
-      def defaut_country
-        Merb::Plugins.config[:merb_abel] ? Merb::Plugins.config[:merb_abel][:default_country] : nil
+      def default_country
+        Merb::Plugins.config[:merb_babel] ? Merb::Plugins.config[:merb_babel][:default_country] : nil
       end
     #
     #### end of dafaults

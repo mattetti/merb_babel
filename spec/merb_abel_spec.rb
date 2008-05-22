@@ -1,32 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-Merb.load_dependencies(:environment => 'test')
-
-Merb::Router.prepare do |r|
-  r.match(/\/?(en\-US|en\-UK|es\-ES|es\-AR)?/).to(:locale => "[1]") do |l|
-    l.match("/tests").to(:controller => "test_controller")
-  end
-  r.match(/\/?(en|es|fr|de)?/).to(:language => "[1]") do |l|
-    l.match("/languages").to(:controller => "language_controller")
-  end
-end
-
-class TestController < Merb::Controller
-  include MLocale
-  include ML10n
-  
-  before :set_locale
-  def index; end
-end
-
-class LanguageController < Merb::Controller
-  include MLocale
-  include ML10n
-  
-  before :set_language
-  def index; end
-end
-
 
 describe 'using set_locale before filter, ' do
   describe 'a controller' do
@@ -151,53 +124,4 @@ describe 'using set_language, ' do
   
     end
   end
-end
-
-describe ML10n do
-  
-  before(:each) do
-    @lang_test_path = File.expand_path(File.dirname(__FILE__) + "/lang")
-    @lang_test_path_2 = File.expand_path(File.dirname(__FILE__) + "/other_lang_dir")
-    reset_localization_files_and_dirs!
-  end
-  
-  it "should have a list of localization directories" do
-    localization_dirs.should == Merb::Plugins.config[:merb_abel][:localization_dirs]
-  end
-  
-  it "should be able to add a new localization directory" do
-    add_localization_dir(@lang_test_path)
-    localization_dirs.include?(@lang_test_path)
-  end
-  
-  it "should have a list of localization source files" do
-    localization_files.should == []
-    add_localization_dir(@lang_test_path)
-    localization_files.include?("#{@lang_test_path}/en.yml").should be_true
-    localization_files.include?("#{@lang_test_path}/en-US.yml").should be_true
-  end
-  
-  it "should load localization files and have them available" do
-    add_localization_dir(@lang_test_path)
-    load_localization!
-    localizations['en'][:right].should == 'right'
-    localizations['en'][:left].should == 'left'
-    localizations['en']['US'][:greetings].should == 'Howdie'
-  end
-  
-  it "should load more localization files and have them available" do
-    add_localization_dir(@lang_test_path)
-    load_localization!
-    localizations['en'][:right].should == 'right'
-    localizations.has_key?('fr').should be_false
-    
-    add_localization_dir(@lang_test_path_2)
-    load_localization!
-    localizations['en'][:right].should == 'right'
-    localizations.has_key?('fr').should be_true
-    localizations['fr'][:right].should == 'la droite'
-    localizations['fr'][:left].should == 'la gauche'
-    localizations['fr'][:greetings].should == 'Salut'
-  end
-  
 end

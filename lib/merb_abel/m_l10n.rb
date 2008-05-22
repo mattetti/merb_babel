@@ -1,5 +1,9 @@
 module ML10n
   
+  def self.localizations
+    @@localizations ||= {}
+  end
+  
   # all localizations are saved in this class variable
   # localizations are namespaced using the language or locale they belong to
   #
@@ -11,7 +15,7 @@ module ML10n
   # 
   # locales, including languages and countries use string keys while localization keys themselves are symbols
   def localizations
-    @@localizations ||= {}
+    ML10n.localizations
   end
   
   # files containing localizations
@@ -21,7 +25,7 @@ module ML10n
   
   # locations to look for localization files
   def localization_dirs
-    @@localization_dirs ||= Merb::Plugins.config[:merb_abel][:localization_dirs].dup
+    @@localization_dirs ||= Merb::Plugins.config[:merb_babel][:localization_dirs].dup
   end
   
   # add a dir to look for localizations
@@ -86,12 +90,17 @@ module ML10n
     find_localization_files
   end
   
+  # localization helper
+  def self.localize(key, *options)
+    MI18n.localize(options.merge({:locale => locale}))
+  end
+  
   protected
   
   def load_localization_hash(l_hash)
-    if valid_localization_hash?(l_hash)
+    if l_hash.valid_localization_hash?
       language = l_hash[:mloc_language_code]
-      if localization_hash_for_locale?(l_hash)
+      if l_hash.localization_hash_with_locale?
         country = l_hash[:mloc_country_code]
         # load localization under the full locale namespace
         localizations[language] ||= {}
@@ -101,15 +110,6 @@ module ML10n
         (localizations[language] ||= {}).merge!(l_hash)
       end
     end
-  end
-  
-  # TODO move that to the Hash class itself
-  def valid_localization_hash?(l_hash)
-    l_hash.has_key?(:mloc_language_code)
-  end
-  
-  def localization_hash_for_locale?(l_hash)
-    l_hash.has_key?(:mloc_country_code)
   end
   
 end
