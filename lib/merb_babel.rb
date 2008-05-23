@@ -21,7 +21,8 @@ if defined?(Merb::Plugins)
       module GlobalHelpers
         include ML10n
 
-        def localize(key, *args)
+        # Used to translate words using localizations
+        def babelize(key, *args)
           options = args.first 
           options ||= {}
           options.merge!(:key => key)
@@ -29,7 +30,9 @@ if defined?(Merb::Plugins)
           options.merge!(:country => country) unless options.has_key?(:country)
           MI18n.lookup(options)
         end
-        alias :l :localize
+        alias :translate :babelize
+        alias :t :babelize
+        alias :_ :babelize
 
       end
     end

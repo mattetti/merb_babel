@@ -48,7 +48,7 @@ module MLocale
         Merb::Plugins.config[:merb_babel] ? Merb::Plugins.config[:merb_babel][:default_country] : nil
       end
     #
-    #### end of dafaults
+    #### end of defaults
     
     protected
   
