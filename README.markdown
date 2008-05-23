@@ -112,8 +112,21 @@ Internationalization(I18n)
 
 I18n enables easy localization of your product. That's what the developer/designer user to make their data localizable.
 
-TODO explain the localize method.
+At the moment, only strings can be localized/translated.
 
+In your controller, or view simply do:
+
+    translate(:localization_key)
+
+You might prefer a shorter version so here are some aliases for you to use:
+
+    babelize(:translation_key)
+or
+    t(:translation_key)  
+or
+    _(:translation_key)
+    
+The translation uses the full locale (language and country) if set and available, otherwise the language localization will be displayed.
 
 
 Other plugins you might want to look at:
