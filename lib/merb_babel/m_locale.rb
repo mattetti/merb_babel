@@ -1,10 +1,6 @@
 # The MLocale module helps you set up a locale, language, country
 # You don't have to use a locale, in some cases you might just want to use the language
 module MLocale
-    
-    def self.extended(obj)
-        p "#{obj} got extended"
-    end
       
     # A locale is made of a language + country code, such as en-UK or en-US 
     def locale 

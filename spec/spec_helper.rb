@@ -2,7 +2,7 @@ $TESTING=true
 $:.push File.join(File.dirname(__FILE__), '..', 'lib')
 require "rubygems"
 require "merb-core"
-require 'merb_abel'
+require 'merb_babel'
 Merb.load_dependencies :environment => "test"
 
 Spec::Runner.configure do |config|

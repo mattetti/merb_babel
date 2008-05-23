@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__) / "merb_abel" / "core_ext")
+require File.join(File.dirname(__FILE__) / "merb_babel" / "core_ext")
 
 # make sure we're running inside Merb
 if defined?(Merb::Plugins)
@@ -11,9 +11,9 @@ if defined?(Merb::Plugins)
     :localization_dirs => ["#{Merb.root}/lang"]
   }
   
-  require File.join(File.dirname(__FILE__) / "merb_abel" / "m_locale")
-  require File.join(File.dirname(__FILE__) / "merb_abel" / "m_l10n")
-  require File.join(File.dirname(__FILE__) / "merb_abel" / "m_i18n")
+  require File.join(File.dirname(__FILE__) / "merb_babel" / "m_locale")
+  require File.join(File.dirname(__FILE__) / "merb_babel" / "m_l10n")
+  require File.join(File.dirname(__FILE__) / "merb_babel" / "m_i18n")
   
   Merb::BootLoader.before_app_loads do
     # require code that must be loaded before the application
@@ -43,5 +43,5 @@ if defined?(Merb::Plugins)
     Merb::Controller.send(:load_localization!)
   end
   
-  Merb::Plugins.add_rakefiles "merb_abel/merbtasks"
+  Merb::Plugins.add_rakefiles "merb_babel/merbtasks"
 end
