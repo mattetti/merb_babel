@@ -126,7 +126,22 @@ or
 or
     _(:translation_key)
     
-The translation uses the full locale (language and country) if set and available, otherwise the language localization will be displayed.
+The translation will use the full locale (language and country) if set and available, otherwise the language translation will be displayed.
+
+*Params*
+
+You can pass a hash of parameters after the translation key. For instance:
+
+    t(:greetings, :language => 'fr')
+
+Would lookup the French translation for the greetings key and return 'Salut'
+
+You can also pass the country code to use the full locale.
+
+    t(:greetings, :language => 'en', :country => 'AU')
+    
+would lookup the Australian English translation for the greetings key and return "G'day"
+
 
 
 Other plugins you might want to look at:

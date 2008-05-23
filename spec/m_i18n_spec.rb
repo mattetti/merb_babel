@@ -37,4 +37,13 @@ describe '#babelize' do
     @c.t(:greetings).should == 'Salut'
   end
   
+  it "should translate passing the full locale" do
+    @c.t(:greetings, :language => 'en', :country => 'UK').should == 'Heya'
+    @c.t(:greetings, :language => 'en', :country => 'US').should == 'Howdie'
+  end
+  
+  it "should translate passing the language" do
+    @c.t(:greetings, :language => 'fr').should == 'Salut'
+  end
+  
 end
