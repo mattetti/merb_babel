@@ -7,7 +7,7 @@ A plugin for the Merb framework that provides locales, languages, countries. (mu
 Purpose of Merb_babel
 ---------------------
 
-Merb_babel is primarily written to fulfill my personal needs. Instead of porting my http://github.com/matta/globalite plugin over, I decided to re write it from scratch learning from my mistakes.
+Merb_babel is primarily written to fulfill my personal needs. Instead of porting my http://github.com/mattetti/globalite plugin over, I decided to re write it from scratch learning from my mistakes.
 
 Goals:
 
@@ -98,7 +98,7 @@ where en represents the language code of the localization
 
 * A localization file is recognized as being locale specific if the mloc_country_code pair is set.
 
-* ONLY localizations/translations specific to a locale should be in the locale loc file.
+* ONLY localizations/translations specific to a locale should be written in a locale file.
 
 * Recommended: set the mloc_language_name pair so you list the available languages in their own language.
 

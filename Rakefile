@@ -4,13 +4,13 @@ require 'rubygems/specification'
 require 'date'
 require "spec/rake/spectask"
 
-PLUGIN = "merb_abel"
-NAME = "merb_abel"
-GEM_VERSION = "0.0.1"
-AUTHOR = "Your Name"
-EMAIL = "Your Email"
-HOMEPAGE = "http://merb-plugins.rubyforge.org/merb_abel/"
-SUMMARY = "Merb plugin that provides ..."
+PLUGIN = "merb_babel"
+NAME = "merb_babel"
+GEM_VERSION = "0.1.0"
+AUTHOR = "Matt Aimonetti"
+EMAIL = "mattaimonetti@gmail.com"
+HOMEPAGE = "http://github.com/mattetti/merb_babel/"
+SUMMARY = "Merb plugin that provides simple localization/internationalisation"
 
 spec = Gem::Specification.new do |s|
   s.name = NAME
@@ -23,7 +23,7 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency('merb', '>= 0.4.0')
+  s.add_dependency('merb-core', '~> 1.0.0')
   s.require_path = 'lib'
   s.autorequire = PLUGIN
   s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
