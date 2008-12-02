@@ -2,11 +2,22 @@ $TESTING=true
 $:.push File.join(File.dirname(__FILE__), '..', 'lib')
 require "rubygems"
 require "merb-core"
-require 'merb_babel'
-Merb.load_dependencies :environment => "test"
+require File.join(File.dirname(__FILE__), "..", 'lib', 'merb_babel')
+
+default_options = {
+  :environment => 'test',
+  :adapter     => 'runner',
+  :session_store => 'cookie',
+  :session_secret_key => '187a66e27674660418cf4499471d5a0587f360d0'
+}
+
+options = default_options.merge($START_OPTIONS || {})
+
+Merb.disable(:initfile)
+Merb.start_environment(options)
 
 Spec::Runner.configure do |config|
-  # config.include(Merb::Test::ViewHelper)
+  config.include Merb::Test::ViewHelper
   config.include Merb::Test::RouteHelper
   config.include Merb::Test::RequestHelper
   config.include Merb::Test::ControllerHelper

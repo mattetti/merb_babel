@@ -43,7 +43,6 @@ if defined?(Merb::Plugins)
   
   Merb::BootLoader.after_app_loads do
     # code that can be required after the application loads
-    Merb::Controller.send(:load_localization!)
   end
   
   Merb::Plugins.add_rakefiles "merb_babel/merbtasks"

@@ -1,5 +1,8 @@
 module ML10n
   
+  # TODO add a mutex for when we load the localizations, in case people want to load the localizations
+  # during runtime
+  
   def self.localizations
     @@localizations ||= {}
   end

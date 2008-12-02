@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe ML10n do
+describe "ML10n" do
+  include ML10n
   
   before(:each) do
     @lang_test_path = File.expand_path(File.dirname(__FILE__) + "/lang")
