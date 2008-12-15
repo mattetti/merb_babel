@@ -26,7 +26,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency('merb-core', '~> 1.0.0')
   s.require_path = 'lib'
   s.autorequire = PLUGIN
-  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
+  s.files = %w(LICENSE README.markdown Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
@@ -49,7 +49,7 @@ namespace :jruby do
 
   desc "Run :package and install the resulting .gem with jruby"
   task :install => :package do
-    sh %{#{SUDO} jruby -S gem install pkg/#{NAME}-#{Merb::VERSION}.gem --no-rdoc --no-ri}
+    sh %{#{SUDO} jruby -S gem install pkg/#{NAME}-#{VERSION}.gem --no-rdoc --no-ri}
   end
   
 end

@@ -7,7 +7,7 @@ if defined?(Merb::Plugins)
   Merb::Plugins.config[:merb_babel] = {
     :default_locale => 'en-US',
     :default_language => 'en',
-    :default_country => 'US',
+    # :default_country => 'US',
     :localization_dirs => ["#{Merb.root}/lang"]
   }
   
@@ -19,7 +19,6 @@ if defined?(Merb::Plugins)
     # require code that must be loaded before the application
     module Merb
       module GlobalHelpers
-        include ML10n
 
         # Used to translate words using localizations
         def babelize(key, *args)
@@ -38,7 +37,7 @@ if defined?(Merb::Plugins)
     end
     
     Merb::Controller.send(:include, MLocale)
-    Merb::Controller.send(:include, ML10n)
+    ML10n.load_localization!
   end
   
   Merb::BootLoader.after_app_loads do

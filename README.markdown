@@ -1,10 +1,10 @@
 Merb_babel
 =========
 
-A plugin for the Merb framework that provides locales, languages, countries. (multi threaded)
+A plugin for the Merb framework that provides locales, languages, countries. (in a thread safe environment)
 
 
-Purpose of Merb_babel
+Purpose of Merb\_babel
 ---------------------
 
 Merb_babel is primarily written to fulfill my personal needs. Instead of porting my http://github.com/mattetti/globalite plugin over, I decided to re write it from scratch learning from my mistakes.
@@ -18,7 +18,7 @@ My first and simple objective is to get Merb to work in Simplified and Tradition
 
 Also, as of today, I'm not planning on supporting model localization since I believe it's easy to do, and in most cases it's too specific to use a plugin. (but other plugins offer that for you anyway ;) )
 
-One of the objectives is that people can require Merb_babel and use merb in a different language without worrying about internationalization/localization. I hope to keep merb helpers and other plugins (merb_activerecord / merb_datamapper) localized so someone can define his app's locale/language/country and Merb will talk his language right away.
+One of the objectives is that people can add Merb\_babel to their project and use merb in a different language without worrying about internationalization/localization. I hope to keep merb helpers and other plugins (merb\_activerecord / merb\_datamapper / merb\_sequel) localized so someone can define his app's locale/language/country and Merb will talk his language right away.
 
 Before you go further, you might want to read [this explanation about i18n/l10n](http://www.w3.org/International/questions/qa-i18n)
 
@@ -49,7 +49,7 @@ At the moment you have 3 ways of setting up a locale:
 * store the locale in the session
 * use routes
 
-Abel doesn't support http header lookup yet.
+Babel doesn't support http header lookup yet.
 
 Set locale in your routes
 --------------------------
@@ -66,20 +66,21 @@ some people might not need to use the full locale, they just want to use one ver
     before :set_language
     
     
-All locale work is done in merb_babel/lib/merb_babel/m_locale.rb and tested in spec/merb_babel_spec.rb
+All locale work is done in ``merb_babel/lib/merb_babel/m_locale.rb`` and tested in ``spec/merb_babel_spec.rb``
 
 Localization(L10n)
 ------------------
 
 L10n is basically the adaptation of your product to a specific locale. In our case, we see L10n as the storing and retrieval of localized data. (for a locale or language)
 
-Localizations are loaded from the localization files.
+Localizations are loaded from localization files.
 
-Localization files are simple yaml files that get loaded in memory. By default Merb_babel will look in ./lang for localization files. The default location is defined in Merb::Plugins.config[:merb_babel][:localization_dirs] and can be overwritten. Also, you can add more folders to look for by calling:
+Localization files are simple yaml files that get loaded in memory. By default Merb\_babel will look in ./lang for localization files. The default location is defined in Merb::Plugins.config[:merb_babel][:localization_dirs] and can be overwritten. Also, you can add more folders to look for by calling:
 
     add_localization_dir(path_with_more_localization_files)
     
 Note: when you add a new localization directory, localizations gets reloaded.
+This needs to be done when Merb loads as I didn't add a mutex around that task yet.
 
 Localizations are available in #localizations and are namespaced as follows:
 
@@ -91,7 +92,7 @@ Localizations are available in #localizations and are namespaced as follows:
 For that the localization files to be loaded properly, you need to follow some conventions:
 
 * you have to declare a merb localization language code pair: 
-    mloc_language_code: en
+    mloc\_language_code: en
 where en represents the language code of the localization
 
 * All generic localization for a language should go under their own language file. Region/culture specific localizations have to go to their own files and will be used if the full locale is set.
@@ -100,11 +101,11 @@ where en represents the language code of the localization
 
 * ONLY localizations/translations specific to a locale should be written in a locale file.
 
-* Recommended: set the mloc_language_name pair so you list the available languages in their own language.
+* Recommended: set the mloc\_language_name pair so you list the available languages in their own language.
 
 * look at examples in spec/lang
 
-All the Localization(L10n) work is done in merb_babel/lib/merb_abel/m_l10n.rb and tested in spec/m_l10n_spec.rb
+All the Localization(L10n) work is done in ``merb_babel/lib/merb_abel/m_l10n.rb`` and tested in ``spec/m_l10n_spec.rb``
 
 
 Internationalization(I18n)
@@ -141,7 +142,6 @@ You can also pass the country code to use the full locale.
     t(:greetings, :language => 'en', :country => 'AU')
     
 would lookup the Australian English translation for the greetings key and return "G'day"
-
 
 
 Other plugins you might want to look at:

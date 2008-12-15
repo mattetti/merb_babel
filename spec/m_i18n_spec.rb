@@ -5,9 +5,9 @@ describe '#babelize' do
   before(:each) do
     Merb::Controller.send :include, Merb::GlobalHelpers
     @c = dispatch_to(TestController, :index)
-    @c.add_localization_dir(File.expand_path(File.dirname(__FILE__) + "/lang"))
-    @c.add_localization_dir(File.expand_path(File.dirname(__FILE__) + "/other_lang_dir"))
-    @c.load_localization!
+    ML10n.add_localization_dir(File.expand_path(File.dirname(__FILE__) + "/lang"))
+    ML10n.add_localization_dir(File.expand_path(File.dirname(__FILE__) + "/other_lang_dir"))
+    ML10n.load_localization!
   end
 
   it "should babelize a word in English " do
