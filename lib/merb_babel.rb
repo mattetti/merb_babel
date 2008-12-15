@@ -22,12 +22,16 @@ if defined?(Merb::Plugins)
 
         # Used to translate words using localizations
         def babelize(key, *args)
-          options = args.first 
-          options ||= {}
-          options.merge!(:key => key)
-          options.merge!(:language => language) unless options.has_key?(:language)
-          options.merge!(:country => country) unless options.has_key?(:country)
-          MI18n.lookup(options)
+          begin
+            options = args.first 
+            options ||= {}
+            options.merge!(:key => key)
+            options.merge!(:language => language) unless options.has_key?(:language)
+            options.merge!(:country => country) unless options.has_key?(:country)
+            MI18n.lookup(options)
+          rescue
+            key.to_s
+          end
         end
         alias :translate :babelize
         alias :t :babelize
