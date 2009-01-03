@@ -1,10 +1,33 @@
+require 'merb_babel/country_guesser'
+require 'locale'
+
 # The MLocale module helps you set up a locale, language, country
 # You don't have to use a locale, in some cases you might just want to use the language
 module MLocale
-      
+
+    def locale_from_request
+      if hal = request.env["HTTP_ACCEPT_LANGUAGE"]
+        hal.gsub!(/\s/, "")
+        result = hal.split(/,/).map do |v|
+          v.split(";q=")
+        end.map do |j|
+          [j[0], j[1] ? j[1].to_f : 1.0]
+        end.sort do |a,b|
+          -(a[1] <=> b[1])
+        end.map do |v|
+          Locale::Tag.parse(v[0])
+        end.first
+        return nil if result.nil?
+        language = result.language
+        country = result.country ||
+          CountryGuesser.country_from_language(language)
+        request.env[:locale] = "#{language}-#{country}"
+      end
+    end
+
     # A locale is made of a language + country code, such as en-UK or en-US 
     def locale 
-      request.env[:locale] || params[:locale] || (session ? session[:locale] : nil) || default_locale
+      request.env[:locale] || params[:locale] || (session ? session[:locale] : nil) || locale_from_request || default_locale
     end
     
     # Many people don't care about locales, they might just want to use languages instead
@@ -14,7 +37,7 @@ module MLocale
     
     # The country is used when localizing currency or time
     def country
-      request.env[:country] || params[:country] || country_from_locale || (session ? session[:country] : nil) || default_country
+      request.env[:country] || params[:country] || country_from_locale || (session ? session[:country] : nil) || CountryGuesser.country_from_language(language) || default_country
     end
     
     # Extract the language from the locale
@@ -58,7 +81,6 @@ module MLocale
       
       # takes a locale as in fr-FR or en-US
       def set_locale
-        
         if locale =~ locale_regexp
           language, country = locale.match(locale_regexp).captures
           # Set the locale, language and country
