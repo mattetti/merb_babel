@@ -1,4 +1,4 @@
-require 'merb_babel/country_guesser'
+require 'merb_babel/locale_detector'
 require 'locale'
 
 # The MLocale module helps you set up a locale, language, country
@@ -20,7 +20,7 @@ module MLocale
         return nil if result.nil?
         language = result.language
         country = result.country ||
-          CountryGuesser.country_from_language(language)
+          LocaleDetector.country_from_language(language)
         request.env[:locale] = "#{language}-#{country}"
       end
     end
@@ -37,7 +37,7 @@ module MLocale
     
     # The country is used when localizing currency or time
     def country
-      request.env[:country] || params[:country] || country_from_locale || (session ? session[:country] : nil) || CountryGuesser.country_from_language(language) || default_country
+      request.env[:country] || params[:country] || country_from_locale || (session ? session[:country] : nil) || LocaleDetector.country_from_language(language) || default_country
     end
     
     # Extract the language from the locale

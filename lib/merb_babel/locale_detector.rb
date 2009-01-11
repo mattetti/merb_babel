@@ -1,4 +1,4 @@
-module CountryGuesser
+module LocaleDetector
   LANGUAGE_TO_COUNTRY = {
     "nn"=>["NO"],
     "uk"=>["UA"],
