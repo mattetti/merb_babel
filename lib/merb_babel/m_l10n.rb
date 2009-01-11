@@ -104,11 +104,11 @@ module ML10n
         if l_hash.localization_hash_with_locale?
           country = l_hash[:mloc_country_code]
           # load localization under the full locale namespace
-          ML10n.localizations[language] ||= Mash.new 
-          (ML10n.localizations[language][country] ||= Mash.new).merge!(l_hash)
+          ML10n.localizations[language] ||= {}
+          (ML10n.localizations[language][country] ||= {}).merge!(l_hash)
         else
           # load generic language localization
-          (ML10n.localizations[language] ||= Mash).merge!(l_hash)
+          (ML10n.localizations[language] ||= {}).merge!(l_hash)
         end
       end
     end
