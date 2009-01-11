@@ -60,7 +60,7 @@ module ML10n
     def find_localization_files
       l_files = []
       ML10n.localization_dirs.map do |l_dir|
-        Dir["#{l_dir}/*", '*.{yml,yaml}'].each do |file|
+        Dir["#{l_dir}/*"].each do |file|
           l_files << file unless l_files.include?(file)
         end
       end

@@ -5,7 +5,7 @@ require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "merb_babel"
-GEM_VERSION = "0.1.0.3"
+GEM_VERSION = "0.1.0.4"
 AUTHOR = "Matt Aimonetti"
 EMAIL = "mattaimonetti@gmail.com"
 HOMEPAGE = "http://github.com/mattetti/merb_babel/"
