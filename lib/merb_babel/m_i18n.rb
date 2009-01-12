@@ -1,7 +1,7 @@
 module MI18n
   
   def self.lookup(options)
-    key = options[:key].to_s.intern
+    key = options[:key].to_s
     language = options[:language]
     country = options[:country]
     raise ArgumentError, "You need to pass a language reference" unless language
@@ -19,9 +19,9 @@ module MI18n
   end
   
   def self.lookup_with_full_locale(key, language, country)
-    country = country.to_s.intern
     if ML10n.localizations.has_key?(language)
-      ML10n.localizations[language].has_key?(country) ? ML10n.localizations[language][country][key.to_s] : nil 
+      ML10n.localizations[language].has_key?(country) ?
+        ML10n.localizations[language][country][key.to_s] : nil 
     else
       nil
     end

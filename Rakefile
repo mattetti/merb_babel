@@ -5,7 +5,7 @@ require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "merb_babel"
-GEM_VERSION = "0.1.0.7"
+GEM_VERSION = "0.1.1.0"
 AUTHOR = "Matt Aimonetti"
 EMAIL = "mattaimonetti@gmail.com"
 HOMEPAGE = "http://github.com/mattetti/merb_babel/"
@@ -49,3 +49,10 @@ task :gemspec do
     file.puts spec.to_ruby
   end
 end
+
+desc "Run specs"
+task :spec do
+  sh "spec --color spec"
+end
+
+task :default => :spec

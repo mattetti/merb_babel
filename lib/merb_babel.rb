@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__) / "merb_babel" / "core_ext")
+#require File.join(File.dirname(__FILE__) / "merb_babel" / "core_ext")
 
 # make sure we're running inside Merb
 if defined?(Merb::Plugins)
@@ -29,8 +29,8 @@ if defined?(Merb::Plugins)
             options.merge!(:language => language) unless options.has_key?(:language)
             options.merge!(:country => country) unless options.has_key?(:country)
             MI18n.lookup(options)
-          rescue
-            key.to_s
+          #rescue
+          #  key.to_s
           end
         end
         alias :translate :babelize

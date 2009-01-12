@@ -1,4 +1,6 @@
 module ML10n
+  LANGUAGE_CODE_KEY = 'mloc_language_code'.freeze
+  COUNTRY_CODE_KEY = 'mloc_country_code'.freeze
   
   class << self
   
@@ -45,7 +47,7 @@ module ML10n
       ML10n.reset_localization_files! 
       ML10n.find_localization_files.each do |l_file|
         begin
-          l_hash = YAML.load_file(l_file).symbolize_keys
+          l_hash = YAML.load_file(l_file)#.symbolize_keys
         rescue Exception => e
           # might raise a real error here in the future
           p e.inspect
@@ -85,6 +87,10 @@ module ML10n
       @@localization_files = nil
       ML10n.find_localization_files
     end
+
+    def reset_localizations!
+      @@localizations = {}
+    end
   
     def reload_localization_files!
       ML10n.reset_localization_files!
@@ -99,10 +105,10 @@ module ML10n
     protected
   
     def load_localization_hash(l_hash)
-      if l_hash.valid_localization_hash?
-        language = l_hash[:mloc_language_code]
-        if l_hash.localization_hash_with_locale?
-          country = l_hash[:mloc_country_code]
+      if l_hash.has_key?(LANGUAGE_CODE_KEY)
+        language = l_hash[LANGUAGE_CODE_KEY]
+        if l_hash.has_key?(COUNTRY_CODE_KEY)
+          country = l_hash[COUNTRY_CODE_KEY]
           # load localization under the full locale namespace
           ML10n.localizations[language] ||= {}
           (ML10n.localizations[language][country] ||= {}).merge!(l_hash)

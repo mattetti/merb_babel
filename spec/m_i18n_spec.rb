@@ -10,6 +10,10 @@ describe '#babelize' do
     ML10n.load_localization!
   end
 
+  after(:each) do
+    ML10n.reset_localizations!
+  end
+
   it "should babelize a word in English " do
     @c.locale.should == 'en-US'
     @c.language.should == 'en'

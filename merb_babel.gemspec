@@ -2,15 +2,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{merb_babel}
-  s.version = "0.1.0.7"
+  s.version = "0.1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matt Aimonetti"]
-  s.date = %q{2009-01-12}
+  s.date = %q{2009-01-13}
   s.description = %q{Merb plugin that provides simple localization/internationalisation}
   s.email = %q{mattaimonetti@gmail.com}
   s.extra_rdoc_files = ["README.markdown", "LICENSE", "TODO"]
-  s.files = ["LICENSE", "README.markdown", "Rakefile", "TODO", "lib/merb_babel", "lib/merb_babel/core_ext.rb", "lib/merb_babel/locale_detector.rb", "lib/merb_babel/m_i18n.rb", "lib/merb_babel/m_l10n.rb", "lib/merb_babel/m_locale.rb", "lib/merb_babel/merbtasks.rb", "lib/merb_babel.rb", "spec/lang", "spec/lang/en-UK.yml", "spec/lang/en-US.yml", "spec/lang/en.yml", "spec/m_i18n_spec.rb", "spec/m_l10n_spec.rb", "spec/merb_babel_spec.rb", "spec/other_lang_dir", "spec/other_lang_dir/fr.yml", "spec/spec_helper.rb"]
+  s.files = ["LICENSE", "README.markdown", "Rakefile", "TODO", "lib/merb_babel", "lib/merb_babel/locale_detector.rb", "lib/merb_babel/m_i18n.rb", "lib/merb_babel/m_l10n.rb", "lib/merb_babel/m_locale.rb", "lib/merb_babel/merbtasks.rb", "lib/merb_babel.rb", "spec/lang", "spec/lang/en-UK.yml", "spec/lang/en-US.yml", "spec/lang/en.yml", "spec/m_i18n_spec.rb", "spec/m_l10n_spec.rb", "spec/merb_babel_spec.rb", "spec/other_lang_dir", "spec/other_lang_dir/fr.yml", "spec/spec_helper.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/mattetti/merb_babel/}
   s.require_paths = ["lib"]
