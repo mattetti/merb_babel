@@ -14,7 +14,7 @@ module MI18n
     if full_location
       return full_location
     else
-      return ML10n.localizations[language][key]
+      return ML10n.localizations[language][key] || key
     end
   end
   
