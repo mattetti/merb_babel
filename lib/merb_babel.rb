@@ -21,11 +21,11 @@ if defined?(Merb::Plugins)
       module GlobalHelpers
 
         # Used to translate words using localizations
-        def babelize(key, *args)
+        def babelize(*args)
           begin
-            options = args.first 
+            options = args.pop if args.last.kind_of?(Hash) 
             options ||= {}
-            options.merge!(:key => key)
+            options.merge!(:keys => args)
             options.merge!(:language => language) unless options.has_key?(:language)
             options.merge!(:country => country) unless options.has_key?(:country)
             MI18n.lookup(options)
