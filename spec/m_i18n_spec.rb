@@ -50,4 +50,7 @@ describe '#babelize' do
     @c.t(:greetings, :language => 'fr').should == 'Salut'
   end
   
+  it "should translate with domain" do
+    @c.t(:night, :greetings, :language => 'en').should == 'Good evening'
+  end
 end

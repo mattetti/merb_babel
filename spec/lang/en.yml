@@ -14,3 +14,6 @@ mloc_language_name: English
 right: right
 left: left
 greetings: Hello
+
+night:
+  greetings: Good evening
