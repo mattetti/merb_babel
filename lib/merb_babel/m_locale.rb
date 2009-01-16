@@ -49,16 +49,25 @@ module MLocale
       end
     #
     #### end of defaults
-    
+      
     protected
   
       def locale_regexp
         /(.+)\-([a-z]{2})/i
       end
       
+      # You can extend this method in application.rb
+      # example:
+      #
+      #   def set_locale
+      #     super
+      #     session[:language] = language
+      #   end
+      #
+      #
       # takes a locale as in fr-FR or en-US
       def set_locale
-        
+      
         if locale =~ locale_regexp
           language, country = locale.match(locale_regexp).captures
           # Set the locale, language and country
@@ -66,7 +75,7 @@ module MLocale
           country = country.upcase
           request.env[:locale] = "#{language}-#{country}"
         end
-        
+      
       end
     
       def set_language
