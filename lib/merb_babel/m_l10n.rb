@@ -1,4 +1,6 @@
 module ML10n
+  LANGUAGE_CODE_KEY = 'mloc_language_code'.freeze
+  COUNTRY_CODE_KEY = 'mloc_country_code'.freeze
   
   class << self
   
@@ -45,7 +47,7 @@ module ML10n
       ML10n.reset_localization_files! 
       ML10n.find_localization_files.each do |l_file|
         begin
-          l_hash = YAML.load_file(l_file).symbolize_keys
+          l_hash = YAML.load_file(l_file)#.symbolize_keys
         rescue Exception => e
           # might raise a real error here in the future
           p e.inspect
@@ -60,7 +62,7 @@ module ML10n
     def find_localization_files
       l_files = []
       ML10n.localization_dirs.map do |l_dir|
-        Dir["#{l_dir}/*", '*.{yml,yaml}'].each do |file|
+        Dir["#{l_dir}/*"].each do |file|
           l_files << file unless l_files.include?(file)
         end
       end
@@ -85,6 +87,10 @@ module ML10n
       @@localization_files = nil
       ML10n.find_localization_files
     end
+
+    def reset_localizations!
+      @@localizations = {}
+    end
   
     def reload_localization_files!
       ML10n.reset_localization_files!
@@ -95,14 +101,39 @@ module ML10n
     def localize(key, *options)
       MI18n.localize(options.merge({:locale => locale}))
     end
+
+    def localize_time(object, format, options)
+      table_for = proc do |table_name, key, default|
+        keys = ["DateFormat", table_name]
+        table = MI18n.lookup(options.merge(:keys => keys)) || {}
+        table[key] || default
+      end
+      format = format.to_s.dup
+      format.gsub!(/%a/) do
+        table_for["AbbrDayNames", object.wday, "%a"]
+      end
+      format.gsub!(/%A/) do
+        table_for["AbbrMonthNames", object.mon - 1, "%A"]
+      end
+      format.gsub!(/%B/) do
+        table_for["MonthNames", object.mon - 1, "%B"]
+      end
+      format.gsub!(/%p/) do
+        table_for["AmPm", object.hour < 12 ? 0 : 1, "%p"]
+      end if object.respond_to?(:hour)
+      format.gsub!(/%\{([a-zA-Z]\w*)\}/) do
+        object.send($1) rescue $1
+      end
+      object.strftime(format)
+    end
   
     protected
   
     def load_localization_hash(l_hash)
-      if l_hash.valid_localization_hash?
-        language = l_hash[:mloc_language_code]
-        if l_hash.localization_hash_with_locale?
-          country = l_hash[:mloc_country_code]
+      if l_hash.has_key?(LANGUAGE_CODE_KEY)
+        language = l_hash[LANGUAGE_CODE_KEY]
+        if l_hash.has_key?(COUNTRY_CODE_KEY)
+          country = l_hash[COUNTRY_CODE_KEY]
           # load localization under the full locale namespace
           ML10n.localizations[language] ||= {}
           (ML10n.localizations[language][country] ||= {}).merge!(l_hash)

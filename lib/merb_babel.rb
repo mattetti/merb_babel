@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__) / "merb_babel" / "core_ext")
+#require File.join(File.dirname(__FILE__) / "merb_babel" / "core_ext")
 
 # make sure we're running inside Merb
 if defined?(Merb::Plugins)
@@ -14,6 +14,9 @@ if defined?(Merb::Plugins)
   require File.join(File.dirname(__FILE__) / "merb_babel" / "m_locale")
   require File.join(File.dirname(__FILE__) / "merb_babel" / "m_l10n")
   require File.join(File.dirname(__FILE__) / "merb_babel" / "m_i18n")
+  require File.join(File.dirname(__FILE__) / "merb_babel" / 'locale_detector')
+  gem "locale"
+  require 'locale'
   
   Merb::BootLoader.before_app_loads do
     # require code that must be loaded before the application
@@ -21,14 +24,19 @@ if defined?(Merb::Plugins)
       module GlobalHelpers
 
         # Used to translate words using localizations
-        def babelize(key, *args)
+        def babelize(*args)
           begin
-            options = args.first 
+            options = args.pop if args.last.kind_of?(Hash) 
             options ||= {}
-            options.merge!(:key => key)
-            options.merge!(:language => language) unless options.has_key?(:language)
-            options.merge!(:country => country) unless options.has_key?(:country)
-            MI18n.lookup(options)
+            options[:language] ||= language
+            options[:country] ||= country
+            case key = args.last
+            when Date, Time
+              format = MI18n.lookup(options.merge(:keys => args[0..-2]))
+              ML10n.localize_time(key, format, options)
+            else
+              MI18n.lookup(options.merge(:keys => args))
+            end
           rescue
             key.to_s
           end
@@ -36,7 +44,6 @@ if defined?(Merb::Plugins)
         alias :translate :babelize
         alias :t :babelize
         alias :_ :babelize
-
       end
     end
     

@@ -1,22 +1,23 @@
 #################################################
-# English localization
+# Japanese localization
 #
 # localization specific must go in their own file
-# see en-US.yml for instance
+# see ja-JP.yml for instance
 #################################################
-mloc_language_code: en
+mloc_language_code: ja
 # Optional, the following key has the name of the localized language in its ow language.
-mloc_language_name: English
+mloc_language_name: Japanese
 # mloc_country:
 #################################################
 
 
-right: right
-left: left
-greetings: Hello
+right: 右
+left: 左
+greetings: こんにちわ
 
 night:
-  greetings: Good evening
+  greetings: こんばんわ
 
 DateFormat:
-  AbbrDayNames: ["S", "M", "T", "W", "T", "F", "S"]
+  AbbrDayNames: ["日", "月", "火", "水", "木", "金", "土"]
+  AmPm: ["午前", "午後"]

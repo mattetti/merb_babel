@@ -10,6 +10,10 @@ describe '#babelize' do
     ML10n.load_localization!
   end
 
+  after(:each) do
+    ML10n.reset_localizations!
+  end
+
   it "should babelize a word in English " do
     @c.locale.should == 'en-US'
     @c.language.should == 'en'
@@ -46,4 +50,26 @@ describe '#babelize' do
     @c.t(:greetings, :language => 'fr').should == 'Salut'
   end
   
+  it "should translate with domain" do
+    @c.t(:night, :greetings, :language => 'en').should == 'Good evening'
+    @c.t(:night, :greetings, :language => 'ja').should == 'こんばんわ'
+  end
+
+  it "should localize date" do
+    date = Date.new(2009,1,1)
+    @c.t("%Y/%m/%d", date, :language => 'en').should == "2009/01/01"
+    @c.t("%Y/%{mon}/%{day}", date, :language => 'en').should == "2009/1/1"
+    @c.t("%a/%d", date, :language => 'en').should == "T/01"
+    @c.t("%a/%d", date, :language => 'en', :country => 'UK').should == "T/01"
+    @c.t("%a/%d", date, :language => 'ja').should == "木/01"
+  end
+
+  it "should localize time" do
+    time = Time.now
+    if time.hour < 12
+      @c.t("%p", time, :language => "ja").should == "午前"
+    else
+      @c.t("%p", time, :language => "ja").should == "午後"
+    end
+  end
 end
