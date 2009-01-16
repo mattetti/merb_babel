@@ -25,18 +25,22 @@ if defined?(Merb::Plugins)
           begin
             options = args.pop if args.last.kind_of?(Hash) 
             options ||= {}
-            options.merge!(:keys => args)
-            options.merge!(:language => language) unless options.has_key?(:language)
-            options.merge!(:country => country) unless options.has_key?(:country)
-            MI18n.lookup(options)
-          #rescue
-          #  key.to_s
+            options[:language] ||= language
+            options[:country] ||= country
+            case key = args.last
+            when Date, Time
+              format = MI18n.lookup(options.merge(:keys => args[0..-2]))
+              ML10n.localize_time(key, format, options)
+            else
+              MI18n.lookup(options.merge(:keys => args))
+            end
+          rescue
+            key.to_s
           end
         end
         alias :translate :babelize
         alias :t :babelize
         alias :_ :babelize
-
       end
     end
     
