@@ -121,6 +121,9 @@ module ML10n
       format.gsub!(/%p/) do
         table_for["AmPm", object.hour < 12 ? 0 : 1, "%p"]
       end if object.respond_to?(:hour)
+      format.gsub!(/%\{([a-zA-Z]\w*)\}/) do
+        object.send($1) rescue $1
+      end
       object.strftime(format)
     end
   

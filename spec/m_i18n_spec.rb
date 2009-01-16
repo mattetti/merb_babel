@@ -58,6 +58,7 @@ describe '#babelize' do
   it "should localize date" do
     date = Date.new(2009,1,1)
     @c.t("%Y/%m/%d", date, :language => 'en').should == "2009/01/01"
+    @c.t("%Y/%{mon}/%{day}", date, :language => 'en').should == "2009/1/1"
     @c.t("%a/%d", date, :language => 'en').should == "T/01"
     @c.t("%a/%d", date, :language => 'en', :country => 'UK').should == "T/01"
     @c.t("%a/%d", date, :language => 'ja').should == "木/01"
