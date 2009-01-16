@@ -5,7 +5,7 @@ require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "merb_babel"
-GEM_VERSION = "0.1.1.2"
+GEM_VERSION = "0.1.2"
 AUTHOR = "Matt Aimonetti"
 EMAIL = "mattaimonetti@gmail.com"
 HOMEPAGE = "http://github.com/mattetti/merb_babel/"
@@ -23,7 +23,7 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency('merb', '>= 1.0')
+  s.add_dependency('merb-core', '>= 1.0')
   s.add_dependency('locale', '>= 0.9.0')
   s.require_path = 'lib'
   s.files = %w(LICENSE README.markdown Rakefile TODO) + Dir.glob("{lib,spec}/**/*")
