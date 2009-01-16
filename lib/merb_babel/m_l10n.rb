@@ -113,7 +113,10 @@ module ML10n
         table_for["AbbrDayNames", object.wday, "%a"]
       end
       format.gsub!(/%A/) do
-        table_for["AbbrMonthNames", object.mon - 1, "%A"]
+        table_for["DayNames", object.wday, "%A"]
+      end
+      format.gsub!(/%b/) do
+        table_for["AbbrMonthNames", object.mon - 1, "%b"]
       end
       format.gsub!(/%B/) do
         table_for["MonthNames", object.mon - 1, "%B"]
